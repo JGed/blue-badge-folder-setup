@@ -1,10 +1,9 @@
 let express = require('express');
 let app = express();
+let calculator = require('./controllers/calculatorcontroller')
 let port = 3000;
 
-app.use('/test', (req, res) => {
-    let response = { message: "This is a test"};
-    res.json(response);
-});
+app.use(express.json());
+app.use('/calculator', calculator);
 
 app.listen(port, () => console.log(`App is listening on port ${port}`));

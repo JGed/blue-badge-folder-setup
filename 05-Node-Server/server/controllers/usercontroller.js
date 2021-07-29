@@ -9,18 +9,18 @@ router.post('/create', (req, res) => {
     User.create({
             email: req.body.user.email,
             password: req.body.user.password
-        })
-        .then(
-            function createSucess(user) {
-                let token = jwt.sign({id: user.id}, process.env.JWT_SECRET, {expiresIn: 60 * 60 * 24});
-                res.json({
-                    user: user,
-                    message: 'User sucessfully created!',
-                    sessionToken: token
-                });
-            }
-        )
-        .catch(err => res.status(500).json({error: err}));
+    })
+    .then(
+        function createSucess(user) {
+            let token = jwt.sign({id: user.id}, process.env.JWT_SECRET, {expiresIn: 60 * 60 * 24});
+            res.json({
+                user: user,
+                message: 'User sucessfully created!',
+                sessionToken: token
+            });
+        }
+    )
+    .catch(err => res.status(500).json({error: err}));
 });
 
 /*
@@ -47,7 +47,7 @@ router.post('/login', (req, res) => {
             }
         }
     )
-    .catch(err => res.status(500).json({error: err}))
+    .catch(err => res.status(500).json({error: err}));
 })
 
 
