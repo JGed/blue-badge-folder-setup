@@ -7,9 +7,11 @@ let user = require('./controllers/usercontroller');
 
 sequelize.sync();
 
+app.use(require('./middleware/headers'));
 app.use(express.json());
-app.use('/journal', journal);
 app.use('/user', user);
+
+app.use('/journal', journal);
 app.listen(3000, () => {
     console.log('App is listening on port 3000')
 });
