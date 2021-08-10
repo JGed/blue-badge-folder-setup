@@ -3,11 +3,9 @@
  *** USER SIGNUP *** 
 *********************** */
 function userSignUp() {
-    console.log('userSignUp Function Called');
     let userEmail = document.getElementById('emailSignup').value;
     let userPass = document.getElementById('pwdSignup').value;
     let newUserData = { user: { email: userEmail, password: userPass } };
-    console.log(`NEWUSERDATA ==> ${newUserData.user.email} ${newUserData.user.password}`); 
     fetch('http://localhost:3000/user/create', {
         method: 'POST',
         headers: {
@@ -17,7 +15,6 @@ function userSignUp() {
     })
     .then(response => response.json())
     .then(response => {
-        console.log(response.sessionToken);
         let token = response.sessionToken;
         localStorage.setItem('SessionToken', token);
         tokenChecker();
@@ -28,11 +25,9 @@ function userSignUp() {
  *** USER LOGIN *** 
 *********************** */
 function userLogin() {
-    console.log('userLogin Function Called');
     let userEmail = document.getElementById('emailLogin').value;
     let userPass = document.getElementById('pwdLogin').value;
     let userData = { user: { email: userEmail, password: userPass } };
-    console.log(`NEWUSERDATA ==> ${userData.user.email} ${userData.user.password}`); 
     fetch('http://localhost:3000/user/login', {
         method: 'POST',
         headers: {
@@ -42,8 +37,6 @@ function userLogin() {
     })
     .then(response => response.json())
     .then(response => {
-        console.log(response);
-        console.log(response.sessionToken);
         let token = response.sessionToken;
         localStorage.setItem('SessionToken', token);
         tokenChecker();
@@ -54,7 +47,6 @@ function userLogin() {
  *** USER LOGOUT *** 
 *********************** */
 function userLogout() {
-    console.log('userLogout Function Called');
     localStorage.setItem('SessionToken', undefined);
     tokenChecker();
 }
@@ -63,5 +55,19 @@ function userLogout() {
 *********************** */
 function tokenChecker() {
     console.log('tokenChecker Function Called');
+     let display = document.getElementById('journals');
+     let header = document.createElement('h5');
+     let accesssToken =localStorage.getItem('SessionToken');
+     let text = 'Login or signup to get started!';
+
+     for (i = 0; i = display.childNodes.length; i++) {
+         display.removeChild(display.firstChild);
+     }
+
+     if (accesssToken === 'undefined') {
+         display.appendChild(header);
+         header.textContent = text;
+         header.setAttribute('id', 'defaultLogin');
+     }
 }
 tokenChecker();

@@ -1,4 +1,3 @@
-
 /* **********************
  *** DISPLAY BY USER *** 
 *********************** */
@@ -57,7 +56,7 @@ function postJournal() {
       .then((response) => response.text())
       .then((result) => console.log(result))
       .catch((error) => console.log("error", error));
-  }
+}
 
 
 /* **********************
@@ -65,11 +64,53 @@ function postJournal() {
 *********************** */
 function editJournal(postId) {
     console.log('editJournal Function Called');
+    const fetch_url = `http://localhost:3000/journal/update/${postId}`;
+    const accessToken = localStorage.getItem('SessionToken');
+
+    let card = document.getElementById(postId);
+    let input = document.createElement('input');
+
+    if(card.childNodes.length < 2) {
+      card.appendChild(input);
+      input.setAttribute('type', 'text');
+      input.setAttribute('id', 'updatedEntry');
+      input.setAttribute('placeholder', 'Edit your journal entry');
+    }
+    else {
+      let updated = document.getElementById('updatedEntry').value;
+      let updateEntry = {journal: { entry: updated } };
+      fetch(fetch_url, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': accessToken
+        },
+        body: JSON.stringify(updateEntry)
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        displayMine();
+      })
+      card.removeChild(card.lastChild);
+    }
 }
 
 /* **********************
  *** DISPLAY BY USER *** 
 *********************** */
-function deleteJournal() {
+function deleteJournal(postId) {
     console.log('deleteJournal Function Called');
+    const accessToken = localStorage.getItem('SessionToken');
+    fetch(`http://localhost:3000/journal/delete/${postId}`, {
+      method: 'DELETE',
+      headers: new Headers({
+        'Content-Type': 'application/json',
+        'Authorization': accessToken
+      })
+    })
+    .then(response => {
+      console.log(response);
+      displayMine();
+    });
 }
