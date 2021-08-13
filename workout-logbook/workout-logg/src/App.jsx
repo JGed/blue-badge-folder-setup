@@ -18,10 +18,12 @@ function App() {
     setSessionToken(newToken);
     console.log(sessionToken);
   }
+
   const clearToken = () => {
     localStorage.clear();
     setSessionToken('');
   }
+
   const protectedViews = () => {
     return (sessionToken === localStorage.getItem('token') ? <WorkoutIndex token={sessionToken} /> : <Auth updateToken={updateToken} />);
   }

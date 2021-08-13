@@ -25,7 +25,7 @@ const Signup = (props) => {
     return(
         <div>
             <h1>Sign up</h1>
-            <Form onSubmit={handleSubmit}>
+            <Form onSubmit={handleSubmit} autoComplete="off">
                 <FormGroup>
                     <Label htmlFor="username">Username</Label>
                     <Input name="username" value={username} onChange={ e => setUsername(e.target.value) }/>
@@ -33,7 +33,7 @@ const Signup = (props) => {
                 <br />
                 <FormGroup>
                     <Label htmlFor="password">Password</Label>
-                    <Input name="username" value={password} onChange={ e => setPassword(e.target.value) }/>
+                    <Input type="password" name="username" value={password} onChange={ e => setPassword(e.target.value) }/>
                 </FormGroup>
                 <br />
                 <Button type="submit">Signup</Button>
